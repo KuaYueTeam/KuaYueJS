@@ -7,7 +7,6 @@ const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
 const getReactNativeMinecraftConfig = require('react-native-minecraft-metro-config')
 const getReactNativeWorkspaceConfig = require('react-native-minecraft-metro-config/lib/workspace')
 
-
 module.exports = mergeConfig(
     getDefaultConfig(path.resolve('.')),
     getReactNativeMinecraftConfig(path.resolve(".")),
