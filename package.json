@@ -1,0 +1,19 @@
+{
+  "name": "@kuayue/root",
+  "private": true,
+  "version": "0.1.0",
+  "dependencies": {
+    "@react-native/metro-config": "^0.74.83",
+    "@types/react-native": "^0.73.0",
+    "react-native": "^0.74.1",
+    "react-native-minecraft": "0.1.2",
+    "react-native-minecraft-metro-config": "0.1.2"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "find-root": "^1.1.0",
+    "get-yarn-workspaces": "^1.0.2"
+  }
+}
