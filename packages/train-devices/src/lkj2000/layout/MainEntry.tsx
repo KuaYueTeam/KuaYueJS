@@ -3,7 +3,7 @@ import {View, Text} from "react-native-minecraft";
 import {OuterFrame} from "../components/Frame";
 import {SignalLight} from "../components/SignalLight";
 
-const backgroundImage = require('../assets/devices.png')
+const backgroundImage = require('../../assets/devices.png')
 
 export default function MainEntry(props:{
     speed: number,

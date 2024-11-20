@@ -1,7 +1,7 @@
 import React from "react"
 import {Text, View} from "react-native-minecraft";
 
-const texture = require('../assets/devices.png')
+const texture = require('../../assets/devices.png')
 
 function getLightColorMap(type:string):[string] | [string,string] | [string,null,string]{
     switch (type) {

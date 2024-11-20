@@ -2,15 +2,15 @@ import {View, Text} from "react-native-minecraft";
 import React from "react";
 import {OuterFrame} from "../components/Frame";
 
-const texture = require('../assets/devices.png')
+const texture = require('../../assets/devices.png')
 
 export default function OperationPanel(props:{
     style:any,
 }){
     return <>
-        <OuterFrame childrenStyle={{
+        <View childrenStyle={{
             positionType:'absolute',
-            top:"212",
+            top:"220",
             left:"0",
             height: '32',
             width: '256',
@@ -165,7 +165,7 @@ export default function OperationPanel(props:{
             }} text="确认"></OperationButtonCommon>
 
 
-        </OuterFrame>
+        </View>
     </>
 }
 

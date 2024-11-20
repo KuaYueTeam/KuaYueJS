@@ -10,6 +10,6 @@ export default function App(){
         }}/>
         {true?<TrainSettings style={{zIndex:1}}/>:null}
 
-        <OperationPanel style={{zIndex:"255"}}></OperationPanel>
+        {true? <OperationPanel style={{zIndex:"255"}}></OperationPanel> : null}
     </>
 }

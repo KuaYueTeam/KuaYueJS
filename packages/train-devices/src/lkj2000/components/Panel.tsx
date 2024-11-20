@@ -1,7 +1,7 @@
 import {View} from "react-native-minecraft";
 import React from "react";
 
-const texture = require('../assets/devices.png')
+const texture = require('../../assets/devices.png')
 export function Panel(props:any){
     return <>
         <View style={{
