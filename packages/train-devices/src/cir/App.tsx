@@ -3,6 +3,7 @@ import MainEntry from "./layout/MainEntry";
 import OperationPanel from "./layout/OperationPanel";
 import BottomOperationPanel from "./layout/BottomOperationPanel";
 import {View, Text} from "react-native-minecraft";
+import EntrySelection from "./layout/EntrySelection";
 
 export default function CIR(){
     return <>
@@ -12,7 +13,7 @@ export default function CIR(){
             top: '35'
         }}>
             <MainEntry/>
-            <OperationPanel/>
+            <EntrySelection/>
             <BottomOperationPanel/>
         </View>
     </>;

@@ -8,13 +8,13 @@ export default function OperationPanel(props:{
     style:any,
 }){
     return <>
-        <View childrenStyle={{
-            positionType:'absolute',
+        <View style={{
+            positionType:"absolute",
             top:"220",
             left:"0",
             height: '32',
             width: '256',
-            ...props.style
+            ...props.style ?? {}
         }}>
             <OperationButtonAlertConfirm style={{
                 left:"10",

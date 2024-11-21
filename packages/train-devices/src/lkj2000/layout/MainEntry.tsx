@@ -18,6 +18,7 @@ export default function MainEntry(props:{
 }){
     return <>
             <View style={{
+                positionType: 'absolute',
                 height: '212',
                 width: '256',
                 backgroundImage,
