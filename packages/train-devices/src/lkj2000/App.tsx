@@ -4,6 +4,7 @@ import TrainSettings from "./layout/TrainSettings";
 import OperationPanel from "./layout/OperationPanel";
 import NoticeQuery from "./layout/NoticeQuery";
 import {View} from "react-native-minecraft";
+import FileTransfer from "./layout/FileTransfer";
 
 export default function App(){
     return <>
@@ -11,7 +12,7 @@ export default function App(){
             zIndex:0
             }}/> : null}
             {false?<TrainSettings style={{zIndex:1}}/>:null}
-            {true ? <NoticeQuery></NoticeQuery> : null}
+            {true ? <FileTransfer></FileTransfer> : null}
             <OperationPanel style={{zIndex:"255"}}></OperationPanel>
     </>
 }
