@@ -29,7 +29,7 @@ export default function OperationPanel(){
                    top: '4',
                    height: '12',
                    width: '8',
-                   backgroundImage:  texture,
+                   backgroundImage: texture,
                     backgroundUV:"128 101 14 27"
                 }}></View>
                 <Text style={{

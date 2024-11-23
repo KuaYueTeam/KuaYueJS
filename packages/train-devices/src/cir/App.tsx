@@ -13,7 +13,7 @@ export default function CIR(){
             top: '35'
         }}>
             <MainEntry/>
-            <EntrySelection/>
+            <OperationPanel/>
             <BottomOperationPanel/>
         </View>
     </>;

@@ -17,7 +17,7 @@ const leftDataSource = [
     {
         fileId: "001",
         trainNo: "G1234",
-        driver: "张三",
+        driver: "1789",
         size: "10003",
         createTime: "05-06 13:45"
     }
@@ -27,7 +27,7 @@ const rightDataSource = [
     {
         fileId: "002",
         trainNo: "G5678",
-        driver: "李四",
+        driver: "23309",
         size: "25594",
         createTime: "05-06 13:45"
     }

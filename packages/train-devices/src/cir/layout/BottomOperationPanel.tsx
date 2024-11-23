@@ -1,6 +1,7 @@
 import React from "react";
 import {View} from "react-native-minecraft";
 import {DangerButton, DarkButton, LightButton} from "../components/Buttons";
+import { LightTextButton } from "./MainEntry";
 
 export default function BottomOperationPanel(){
     return <>
@@ -19,9 +20,9 @@ export default function BottomOperationPanel(){
             <LightButton style={{left: '175', top: '0'}}></LightButton>
 
 
-            <LightButton style={{left: '125', top: '24'}}></LightButton>
-            <LightButton style={{left: '150', top: '24'}}></LightButton>
-            <LightButton style={{left: '175', top: '24'}}></LightButton>
+            <LightTextButton style={{left: '125', top: '24'}} text="列尾|消号"></LightTextButton>
+            <LightTextButton style={{left: '150', top: '24'}} text="列尾|确认"></LightTextButton>
+            <LightTextButton style={{left: '175', top: '24'}} text="风压|查询"></LightTextButton>
 
 
             <DangerButton style={{left: '87.5', top: '24'}}></DangerButton>
