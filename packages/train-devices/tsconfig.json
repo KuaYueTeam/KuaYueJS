@@ -1,11 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es2016",
+    "target": "es2022",
     "module": "commonjs",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": true,
+    "composite": true,
+    "incremental": true,
     "skipLibCheck": true,
-    "jsx": "react"
+    "esModuleInterop": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "types": [],
+    "rootDir": "src",
+    "outDir": "lib",
+    "noImplicitThis": false,
+    "strictFunctionTypes": false,
+    },
+    "include": [
+      "src",
+    ]
   }
-}

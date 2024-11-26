@@ -4,8 +4,9 @@
   "version": "0.1.0",
   "dependencies": {
     "react-native": "^0.74.1",
-    "react-native-minecraft": "^0.1.4",
-    "react-native-minecraft-metro-config": "^0.1.4"
+    "react-native-minecraft": "^0.1.6",
+    "react-native-minecraft-metro-config": "^0.1.4",
+    "typescript": "^5.7.2"
   },
   "jest": {
     "haste": {
@@ -23,7 +24,17 @@
   },
   "minecraft": {
     "debug-client": [
-      "src/index.bundle"
+      "client/index.bundle"
     ]
+  },
+  "devDependencies": {
+    "@kasugalib/core": "^0.0.2",
+    "@kasugalib/menu": "^0.0.4",
+    "@kasugalib/nbt": "^0.0.3",
+    "@kasugalib/registry": "^0.0.2",
+    "esbuild": "^0.24.0"
+  },
+  "scripts": {
+    "dev:server": "esbuild --bundle src/index.ts --outfile=lib/index.js --external:@kasugalib/nbt --external:@kasugalib/registry --platform=node --watch"
   }
 }

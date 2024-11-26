@@ -4,3 +4,4 @@ metro-cache
 package.lock
 .idea
 .yarn
+lib
