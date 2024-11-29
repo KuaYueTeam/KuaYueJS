@@ -4,8 +4,8 @@
   "version": "0.1.0",
   "dependencies": {
     "react-native": "^0.74.1",
-    "react-native-minecraft": "^0.1.6",
-    "react-native-minecraft-metro-config": "^0.1.4",
+    "react-native-minecraft": "^0.2.1",
+    "react-native-minecraft-metro-config": "^0.2.0",
     "typescript": "^5.7.2"
   },
   "jest": {

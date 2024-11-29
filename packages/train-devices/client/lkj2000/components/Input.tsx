@@ -13,6 +13,7 @@ export function Input(props:any){
             backgroundNineSliceParam:"3 0.75",
             ...props.childrenStyle
         }}>
+            {props.children}
         </View>
     </>
 }

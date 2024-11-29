@@ -18,6 +18,21 @@ export function OuterFrame(props:any){
     </>
 }
 
+export function OuterFrameActivate(props:any){
+    return <>
+        <View style={{
+            positionType:'absolute',
+            backgroundImage: texture,
+            backgroundUV:"0 44 10 10",
+            backgroundRenderType:"nine_slice",
+            backgroundNineSliceParam:"3 0.25",
+            ...props.childrenStyle
+        }}>
+            {props.children}
+        </View>
+    </>
+}
+
 export function InnerFrame(props:any){
     return <>
         <View style={{

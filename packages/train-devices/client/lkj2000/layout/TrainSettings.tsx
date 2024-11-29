@@ -1,18 +1,47 @@
 import React from "react";
 import {OuterFrame} from "../components/Frame";
-import {Text, View} from "react-native-minecraft";
+import {Text, useData, View} from "react-native-minecraft";
 import LabeledInput from "../components/LabeledInput";
 import MenuButton from "../components/MenuButton";
 
-export default function TrainSettings(props:{
+export default function TrainSettings(props){
+    const isActive = useData("active");
+    return <>
+        {isActive ? <TrainSettingsView style={{zIndex:"1"}}></TrainSettingsView> : null}
+    </>
+}
+
+export function TrainSettingsView(props:{
     style: any
 }){
+    const activeElement = useData("activeElement");
+    const driverNumber = useData("driverNumber");
+    const assistantDriverNumber = useData("assistantDriverNumber");
+    const sectionNumber = useData("sectionNumber");
+    const stationNumber = useData("stationNumber");
+    const trainType = useData("trainType");
+    const trainNumber = useData("trainNumber");
+    const trainCategory = useData("trainCategory");
+    const mainOrSupplement = useData("mainOrSupplement");
+    const totalWeight = useData("totalWeight");
+    const carCount = useData("carCount");
+    const calculatedLength = useData("calculatedLength");
+    const speedLevel = useData("speedLevel");
+    const loadWeight = useData("loadWeight");
+    const passengerCar = useData("passengerCar");
+    const heavyCar = useData("heavyCar");
+    const emptyCar = useData("emptyCar");
+    const nonOperationalCar = useData("nonOperationalCar");
+    const substitutePassengerCar = useData("substitutePassengerCar");
+    const guardCar = useData("guardCar");
+    
     return <>
         <OuterFrame childrenStyle={{
             top:"45",
             left:"30",
             width:"195",
-            height:"140"
+            height:"140",
+            ...props.style
         }}>
             <Text style={{
                 positionType:"absolute",
@@ -23,97 +52,97 @@ export default function TrainSettings(props:{
                 <LabeledInput style={{
                     top: "20",
                     left: "5"
-                }} text="司机号" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="司机号" content={driverNumber} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "driverNumber"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "30",
                     left: "5"
-                }} text="副司机号" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="副司机号" content={assistantDriverNumber} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "assistantDriverNumber"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "40",
                     left: "5"
-                }} text="区段号" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="区段号" content={sectionNumber} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "sectionNumber"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "50",
                     left: "5"
-                }} text="车站号" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="车站号" content={stationNumber} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "stationNumber"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "60",
                     left: "5"
-                }} text="车次种类" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="车次种类" content={trainType} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "trainType"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "70",
                     left: "5"
-                }} text="车次号" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="车次号" content={trainNumber} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "trainNumber"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "80",
                     left: "5"
-                }} text="列车种类" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="列车种类" content={trainCategory} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "trainCategory"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "90",
                     left: "5"
-                }} text="本/补" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="本/补" content={mainOrSupplement} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "mainOrSupplement"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "20",
                     left: "58"
-                }} text="总  重" textWidth={23} inputWidth={45} height={5} fontSize={5}></LabeledInput>
+                }} text="总  重" content={totalWeight} textWidth={23} inputWidth={45} height={5} fontSize={5} activate={activeElement === "totalWeight"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "30",
                     left: "58"
-                }} text="辆  数" textWidth={23} inputWidth={45} height={5} fontSize={5}></LabeledInput>
+                }} text="辆  数" content={carCount} textWidth={23} inputWidth={45} height={5} fontSize={5} activate={activeElement === "carCount"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "40",
                     left: "58"
-                }} text="计  长" textWidth={23} inputWidth={45} height={5} fontSize={5}></LabeledInput>
+                }} text="计  长" content={calculatedLength} textWidth={23} inputWidth={45} height={5} fontSize={5} activate={activeElement === "calculatedLength"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "50",
                     left: "58"
-                }} text="车速等级" textWidth={23} inputWidth={45} height={5} fontSize={5}></LabeledInput>
+                }} text="车速等级" content={speedLevel} textWidth={23} inputWidth={45} height={5} fontSize={5} activate={activeElement === "speedLevel"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "20",
                     left: "130"
-                }} text="载重" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="载重" content={loadWeight} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "loadWeight"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "30",
                     left: "130"
-                }} text="客车" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="客车" content={passengerCar} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "passengerCar"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "40",
                     left: "130"
-                }} text="重车" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="重车" content={heavyCar} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "heavyCar"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "50",
                     left: "130"
-                }} text="空车" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="空车" content={emptyCar} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "emptyCar"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "60",
                     left: "130"
-                }} text="非运用车" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="非运用车" content={nonOperationalCar} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "nonOperationalCar"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "70",
                     left: "130"
-                }} text="代客车" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="代客车" content={substitutePassengerCar} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "substitutePassengerCar"}></LabeledInput>
 
                 <LabeledInput style={{
                     top: "80",
                     left: "130"
-                }} text="守车" textWidth={23} inputWidth={26} height={5} fontSize={5}></LabeledInput>
+                }} text="守车" content={guardCar} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "guardCar"}></LabeledInput>
             </View>
 
             <MenuButton style={{
@@ -121,7 +150,7 @@ export default function TrainSettings(props:{
                 left: "10",
                 width:"27",
                 height:"8"
-            }} activate={false}>
+            }} activate={activeElement === "mainSpeed"}>
                 <Text fontSize="5" content="4 主速度" style={{
                     top: "2",
                     left:"2"
@@ -133,7 +162,7 @@ export default function TrainSettings(props:{
                 left: "40",
                 width:"27",
                 height:"8"
-            }} activate={false}>
+            }} activate={activeElement === "system"}>
                 <Text fontSize="5" content="3 系统" style={{
                     top: "2",
                     left:"2"
@@ -145,7 +174,7 @@ export default function TrainSettings(props:{
                 left: "70",
                 width:"27",
                 height:"8"
-            }} activate={false}>
+            }} activate={activeElement === "time"}>
                 <Text fontSize="5" content="2 时间" style={{
                     top: "2",
                     left:"2"
@@ -157,7 +186,7 @@ export default function TrainSettings(props:{
                 left: "100",
                 width:"27",
                 height:"8"
-            }} activate={false}>
+            }} activate={activeElement === "maintenance"}>
                 <Text fontSize="5" content="1 检修" style={{
                     top: "2",
                     left:"2"
@@ -169,7 +198,7 @@ export default function TrainSettings(props:{
                 left: "130",
                 width:"27",
                 height:"8"
-            }} activate={false}>
+            }} activate={activeElement === "cancel"}>
                 <Text fontSize="5" content="0 取消" style={{
                     top: "2",
                     left:"2"
@@ -181,7 +210,7 @@ export default function TrainSettings(props:{
                 left: "160",
                 width:"27",
                 height:"8"
-            }} activate={false}>
+            }} activate={activeElement === "confirm"}>
                 <Text fontSize="5" content="  确 定  " style={{
                     top: "2",
                     left:"2"
@@ -193,7 +222,7 @@ export default function TrainSettings(props:{
                 left: "10",
                 width:"57",
                 height:"8"
-            }} activate={false}>
+            }} activate={activeElement === "dualGauge"}>
                 <Text fontSize="5" content="5 双针表切换" style={{
                     top: "2",
                     left:"2"

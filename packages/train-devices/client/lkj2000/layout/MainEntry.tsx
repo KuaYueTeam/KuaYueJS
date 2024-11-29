@@ -1,11 +1,20 @@
 import React from "react";
-import {View, Text} from "react-native-minecraft";
+import {View, Text, MenuChannelComponent} from "react-native-minecraft";
 import {OuterFrame} from "../components/Frame";
 import {SignalLight} from "../components/SignalLight";
+import TrainSettings, {TrainSettingsView} from "./TrainSettings";
 
 const backgroundImage = require('../../assets/devices.png')
 
-export default function MainEntry(props:{
+export default function MainEntry(){
+    return <>
+        <MenuChannelComponent id="settings"><TrainSettings style={{zIndex:"1"}}/></MenuChannelComponent>
+        <MainEntryView speed="0" speedLimit="0" nextSignalDistance="0" nextSignal="" mileage="" infoDialog={null} light="UU"/>
+    </>
+}
+
+
+export function MainEntryView(props:{
     speed: number,
     speedLimit:number,
     nextSignalDistance: number,
@@ -14,6 +23,7 @@ export default function MainEntry(props:{
     infoDialog?: null | {
         text: string
     },
+    light: string,
     style: any
 }){
     return <>
@@ -36,7 +46,7 @@ export default function MainEntry(props:{
                     <SignalLight style={{
                         top:"2",
                         left:"2"
-                    }} type="LU"></SignalLight>
+                    }} type={props.light}></SignalLight>
                 </DataArea>
                 <OuterFrame childrenStyle={{
                     height:'5',

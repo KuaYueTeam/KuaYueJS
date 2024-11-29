@@ -5,10 +5,12 @@ import {Input} from "./Input";
 export default function LabeledInput(props:{
     style: any,
     text: string,
+    content?: string,
     textWidth: number,
     inputWidth: number,
     height:number,
-    fontSize: number
+    fontSize: number,
+    activate: boolean
 }){
     return <>
         <View style={{
@@ -25,7 +27,14 @@ export default function LabeledInput(props:{
                 left:props.textWidth.toString(),
                 width:props.inputWidth.toString(),
                 height:(props.height+2).toString()
-            }}></Input>
+            }}>
+                <Text style={{
+                    positionType:'absolute',
+                    height:props.height.toString(),
+                    left:"1",
+                    top:"1"
+                }} content={(props.content || "") + (props.activate ? "|" : "")} fontSize={props.fontSize.toString()} color="#000000"></Text>
+            </Input>
         </View>
     </>
 }
