@@ -6,8 +6,8 @@
     "@react-native/metro-config": "^0.74.83",
     "@types/react-native": "^0.73.0",
     "react-native": "^0.74.1",
-    "react-native-minecraft": "^0.2.1",
-    "react-native-minecraft-menu": "^0.2.1",
+    "react-native-minecraft": "^0.2.2",
+    "react-native-minecraft-menu": "^0.2.2",
     "react-native-minecraft-metro-config": "^0.2.0"
   },
   "workspaces": [
@@ -18,8 +18,5 @@
     "find-workspaces": "^0.3.1",
     "get-yarn-workspaces": "^1.0.2"
   },
-  "packageManager": "yarn@3.6.4",
-  "resolutions": {
-    "react-native-minecraft-menu": "portal:/D:/Projects/Minecraft/ReactNativeMinecraft/packages/react-native-minecraft-menu"
-  }
+  "packageManager": "yarn@3.6.4"
 }
