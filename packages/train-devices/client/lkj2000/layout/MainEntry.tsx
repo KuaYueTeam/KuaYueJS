@@ -3,6 +3,8 @@ import {View, Text, MenuChannelComponent} from "react-native-minecraft";
 import {OuterFrame} from "../components/Frame";
 import {SignalLight} from "../components/SignalLight";
 import TrainSettings, {TrainSettingsView} from "./TrainSettings";
+import {SpecialDrive} from "./SpecialDrive";
+import {MainQuery} from "./MainQuery";
 
 const backgroundImage = require('../../assets/devices.png')
 
@@ -10,6 +12,8 @@ export default function MainEntry(){
     return <>
         <MenuChannelComponent id="settings"><TrainSettings style={{zIndex:"1"}}/></MenuChannelComponent>
         <MainEntryView speed="0" speedLimit="0" nextSignalDistance="0" nextSignal="" mileage="" infoDialog={null} light="UU"/>
+        <MenuChannelComponent id="specialDrive"><SpecialDrive style={{zIndex:"1"}}/></MenuChannelComponent>
+        <MenuChannelComponent id="mainQuery"><MainQuery style={{zIndex:"1"}}/></MenuChannelComponent>
     </>
 }
 

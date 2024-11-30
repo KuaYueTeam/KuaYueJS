@@ -1,9 +1,9 @@
 import {defineGroup, defineState} from "react-native-minecraft-menu";
+import {createMenu} from "../utils/menu";
 
 export function useSettings(){
     return defineGroup('settings', ()=>{
         const [isActive, setActive] = defineState(false, "active");
-
         const [activeElement, setActiveElement] = defineState("confirm", "activeElement");
 
         const [driverNumber, setDriverNumber] = defineState("", "driverNumber");
@@ -215,7 +215,7 @@ export function useSettings(){
                 "down": "driverNumber",
                 "type": "button"
             }
-        }
+        } as const;
 
         const quickAction = {
             "0": "cancel",
@@ -224,95 +224,14 @@ export function useSettings(){
             "2": "time",
             "1": "maintenance",
             "5": "dualGauge"
-        }
+        } as const;
 
-        function onButtonClicked(button){
-            const element = focusConfiguration[activeElement()];
-            switch(button){
-                // 数字键
-                case "0_check":
-                case "1_forward":
-                case "2_shunting":
-                case "3_position":
-                case "4_entry_number":
-                case "5_log_position":
-                case "6_back":
-                case "7_driveStart":
-                case "8_correction":
-                case "9_inbound_outbound":
-                    const number = button.split('_')[0];
-                    if(element?.type === "input" && element.insert){
-                        element.insert(number);
-                    } else {
-                        if(quickAction[number]){
-                            if(activeElement() === quickAction[number]){
-                                if(element.click){
-                                    element.click();
-                                }
-                            } else {
-                                setActiveElement(quickAction[number]);
-                            }
-                        }
-                    }
-                    break;
-
-                // 功能键
-                case "confirmAlarm":
-                    break;
-                case "unlock":
-                    break;
-                case "resetBreak":
-                    break;
-                case "query":
-                    break;
-                case "left":
-                    if(element?.type === "input") {
-                        if(element.delete)
-                            element.delete();
-                    }else if(element.left){
-                        setActiveElement(element.left);
-                    }
-                    break;
-                case "up":
-                    if(element.type == "select" && element.isSelectActive()){
-                        // @TODO
-                    } else if(element.up){
-                        setActiveElement(element.up);
-                    } else if(element.previous){
-                        setActiveElement(element.previous);
-                    }
-                    break;
-                case "down":
-                    if(element.type == "select"){
-                        if(element.isSelectActive()){
-                            // @TODO
-                        } else {
-                            // @TODO
-                        }
-                    } else if(element.down){
-                        setActiveElement(element.down);
-                    } else if(element.next){
-                        setActiveElement(element.next);
-                    }
-                    break;
-                case "store":
-                    break;
-                case "right":
-                    if(element.right){
-                        setActiveElement(element.right);
-                    }
-                    break;
-                case "settings":
-                    setActive(false);
-                    break;
-                case "confirm":
-                    if(element.type == "button"){
-                        element.click();
-                    } else {
-                        setActiveElement(element.next);
-                    }
-            }
-        }
+        const onButtonClicked = createMenu({
+            focusConfiguration,
+            quickAction,
+            setActiveElement,
+            activeElement
+        });
 
         return {
             setActive,
@@ -339,5 +258,5 @@ export function useSettings(){
             substitutePassengerCar,
             guardCar
         };
-    })
+    });
 }
