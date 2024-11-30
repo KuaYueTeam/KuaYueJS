@@ -29,6 +29,9 @@
     "client": [
       "dist/index.js"
     ],
+    "server": [
+      "lib/index.js"
+    ],
     "assets": "dist"
   },
   "devDependencies": {
