@@ -25,7 +25,11 @@
   "minecraft": {
     "debug-client": [
       "client/index.bundle"
-    ]
+    ],
+    "client": [
+      "dist/index.js"
+    ],
+    "assets": "dist"
   },
   "devDependencies": {
     "@kasugalib/core": "^0.0.2",
@@ -35,6 +39,8 @@
     "esbuild": "^0.24.0"
   },
   "scripts": {
-    "dev:server": "esbuild --bundle src/index.ts --outfile=lib/index.js --external:@kasugalib/nbt --external:@kasugalib/registry --platform=node --watch"
+    "dev:server": "esbuild --bundle src/index.ts --outfile=lib/index.js --external:@kasugalib/nbt --external:@kasugalib/registry --platform=node --watch",
+    "build:server": "esbuild --bundle src/index.ts --outfile=lib/index.js --external:@kasugalib/nbt --external:@kasugalib/registry --platform=node",
+    "build:client": "react-native bundle --platform minecraft --minify false --bundle-output dist/index.js --entry-file client/index.ts --assets-dest dist/"
   }
 }
