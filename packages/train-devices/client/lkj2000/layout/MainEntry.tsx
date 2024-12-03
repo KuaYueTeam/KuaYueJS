@@ -1,5 +1,5 @@
-import React from "react";
-import {View, Text, MenuChannelComponent} from "react-native-minecraft";
+import React, {useState, useEffect} from "react";
+import {View, Text, MenuChannelComponent, useData} from "react-native-minecraft";
 import {OuterFrame} from "../components/Frame";
 import {SignalLight} from "../components/SignalLight";
 import TrainSettings, {TrainSettingsView} from "./TrainSettings";
@@ -30,6 +30,16 @@ export function MainEntryView(props:{
     light: string,
     style: any
 }){
+    const length = useData("settings.calculatedLength");
+    const speed = useData("speed");
+    const [displayedLength, setDisplayedLength] = useState(0);
+    useEffect(()=>{
+        let _length = parseInt(length);
+        if(!isNaN(_length) && _length > 0)
+            setDisplayedLength(Math.min(_length / 100, 30));
+        else
+            setDisplayedLength(0);
+    },[length]);
     return <>
             <View style={{
                 positionType: 'absolute',
@@ -82,7 +92,7 @@ export function MainEntryView(props:{
                     width:'25',
                     top:'3',
                     left:'40'
-                }} data={props.speed.toString()} color="#00E000">
+                }} data={(speed?.toString() ?? "----")} color="#00E000">
 
                 </BigDataAreaWithText>
 
@@ -342,10 +352,10 @@ export function MainEntryView(props:{
                         positionType:"absolute",
                         backgroundImage,
                         backgroundUV:"64 3 8 1",
-                        width:"8",
+                        width:displayedLength.toString(),
                         height:"2",
                         top:"115",
-                        left:"29"
+                        left:(37 - displayedLength).toString(),
                     }}></View>
                     <View style={{
                         positionType:"absolute",

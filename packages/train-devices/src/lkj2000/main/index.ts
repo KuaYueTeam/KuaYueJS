@@ -5,6 +5,8 @@ import {useMainQuery} from "./main_query";
 
 export function useMain(){
     return defineGroup('main', ()=>{
+        const [speed, updateSpeed] = defineState<"----" | number>(0, 'speed');
+        const [signal, updateSignal] = defineState<string>("N", 'signal');
         const settings = useSettings();
         const specialDrive = useSpecialDrive();
         const mainQuery = useMainQuery();
@@ -25,6 +27,6 @@ export function useMain(){
                 mainQuery.setActive(!mainQuery.isActive());
             }
         }
-        return {settings, onButtonClicked};
+        return {settings, onButtonClicked, updateSpeed, updateSignal};
     })
 }

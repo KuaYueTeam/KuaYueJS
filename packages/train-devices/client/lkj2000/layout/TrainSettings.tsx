@@ -3,6 +3,7 @@ import {OuterFrame} from "../components/Frame";
 import {Text, useData, View} from "react-native-minecraft";
 import LabeledInput from "../components/LabeledInput";
 import MenuButton from "../components/MenuButton";
+import { LabeledSelectInput } from "../components/SelectInput";
 
 export default function TrainSettings(props){
     const isActive = useData("active");
@@ -69,25 +70,28 @@ export function TrainSettingsView(props:{
                     left: "5"
                 }} text="车站号" content={stationNumber} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "stationNumber"}></LabeledInput>
 
-                <LabeledInput style={{
+                <LabeledSelectInput style={{
                     top: "60",
-                    left: "5"
-                }} text="车次种类" content={trainType} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "trainType"}></LabeledInput>
+                    left: "5",
+                    zIndex: "3"
+                }} text="车次种类" content={"K"} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "trainType"} buttonWidth={6}></LabeledSelectInput>
 
                 <LabeledInput style={{
                     top: "70",
                     left: "5"
                 }} text="车次号" content={trainNumber} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "trainNumber"}></LabeledInput>
 
-                <LabeledInput style={{
+                <LabeledSelectInput style={{
                     top: "80",
-                    left: "5"
-                }} text="列车种类" content={trainCategory} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "trainCategory"}></LabeledInput>
+                    left: "5",
+                    zIndex: "2"
+                }} text="列车种类" content={"客车"} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "trainCategory"} buttonWidth={6}></LabeledSelectInput>
 
-                <LabeledInput style={{
+                <LabeledSelectInput style={{
                     top: "90",
-                    left: "5"
-                }} text="本/补" content={mainOrSupplement} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "mainOrSupplement"}></LabeledInput>
+                    left: "5",
+                    zIndex: "1"
+                }} text="本/补"  content={"本务"} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "mainOrSupplement"} buttonWidth={6}></LabeledSelectInput>
 
                 <LabeledInput style={{
                     top: "20",
@@ -102,12 +106,12 @@ export function TrainSettingsView(props:{
                 <LabeledInput style={{
                     top: "40",
                     left: "58"
-                }} text="计  长" content={calculatedLength} textWidth={23} inputWidth={45} height={5} fontSize={5} activate={activeElement === "calculatedLength"}></LabeledInput>
+                }} text="计  长" content={activeElement === "calculatedLength" ? calculatedLength : (calculatedLength.length > 0 ? `${calculatedLength.slice(0,calculatedLength.length - 1)}.${calculatedLength.slice(calculatedLength.length - 1)}` : "0.0")} textWidth={23} inputWidth={45} height={5} fontSize={5} activate={activeElement === "calculatedLength"}></LabeledInput>
 
-                <LabeledInput style={{
+                <LabeledSelectInput style={{
                     top: "50",
                     left: "58"
-                }} text="车速等级" content={speedLevel} textWidth={23} inputWidth={45} height={5} fontSize={5} activate={activeElement === "speedLevel"}></LabeledInput>
+                }} text="车速等级" content={"客5(80km/h)"} textWidth={23} inputWidth={45} height={5} fontSize={5} activate={activeElement === "speedLevel"} buttonWidth={6}></LabeledSelectInput>
 
                 <LabeledInput style={{
                     top: "20",
