@@ -5,6 +5,7 @@
   "dependencies": {
     "react-native": "^0.74.1",
     "react-native-minecraft": "^0.2.2",
+    "react-native-minecraft-menu": "^0.2.3",
     "react-native-minecraft-metro-config": "^0.2.0",
     "typescript": "^5.7.2"
   },
