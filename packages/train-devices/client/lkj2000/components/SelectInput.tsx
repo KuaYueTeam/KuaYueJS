@@ -64,7 +64,9 @@ interface LabeledSelectInputProps {
     height: number;
     fontSize: number;
     activate: boolean;
-    selectActivate?: boolean;
+    inSelectionMode?: boolean;
+    selectionTop?: number
+    availableSelection?: string[]
 }
 
 export function LabeledSelectInput(props: LabeledSelectInputProps) {
@@ -89,11 +91,37 @@ export function LabeledSelectInput(props: LabeledSelectInputProps) {
                 childrenStyle={{
                     left: props.textWidth.toString()
                 }}
-                selectAreaHeight={props.fontSize * 3}
+                selectAreaHeight={(props.fontSize + 1) * 4}
                 selectEntry={
-                    <> </>
+                    <>
+                        {
+                            (props.availableSelection??[]).slice(props.selectionTop ?? 0,(props.selectionTop ?? 0) + 4).map((t,index)=>{
+                                return <>
+
+                                    <WhiteBlock style={{
+                                        height: `${props.fontSize}`,
+                                        top: `${index * (props.fontSize + 1)}`,
+                                        width: `${props.inputWidth}`,
+                                        backgroundFilterColor: props.content == (index + (props.selectionTop ?? 0)).toString() ? '000080FF' : '00000000'
+                                    }}>
+                                        <Text style={{
+                                            positionType: 'absolute',
+                                            height: `${props.fontSize}`,
+                                            left: "1",
+                                            top: `0`
+                                        }}
+                                              content={t}
+                                              fontSize={`${props.fontSize}`}
+                                              color={props.content == (index + (props.selectionTop ?? 0)).toString() ? "#FFFFFF" : "#000000"} />
+                                    </WhiteBlock>
+
+                                </>
+                            })
+
+                        }
+                    </>
                 }
-                activate = { props.selectActivate }
+                activate = { props.inSelectionMode }
             >
                 <Text style={{
                     positionType: 'absolute',
@@ -101,7 +129,7 @@ export function LabeledSelectInput(props: LabeledSelectInputProps) {
                     left: "1",
                     top: "1"
                 }} 
-                content={props.content || ""}
+                content={(props.availableSelection??[])[parseInt(props.content ?? "")] ?? ""}
                 fontSize={props.fontSize.toString()}
                 color="#000000" />
             </SelectInput>

@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {OuterFrame} from "../components/Frame";
-import {Text, useData, View} from "react-native-minecraft";
+import {Text, useData, useGuiContext, View} from "react-native-minecraft";
 import LabeledInput from "../components/LabeledInput";
 import MenuButton from "../components/MenuButton";
 import { LabeledSelectInput } from "../components/SelectInput";
@@ -12,6 +12,8 @@ export default function TrainSettings(props){
     </>
 }
 
+const speedLevels = [];
+
 export function TrainSettingsView(props:{
     style: any
 }){
@@ -21,13 +23,19 @@ export function TrainSettingsView(props:{
     const sectionNumber = useData("sectionNumber");
     const stationNumber = useData("stationNumber");
     const trainType = useData("trainType");
+    const trainTypeInSelect = useData("trainTypeInSelect");
+    const trainTypeSelectTop = useData("trainTypeSelectTop");
     const trainNumber = useData("trainNumber");
     const trainCategory = useData("trainCategory");
+    const trainCategoryInSelect = useData("trainCategoryInSelect");
     const mainOrSupplement = useData("mainOrSupplement");
+    const mainOrSupplementInSelect = useData("mainOrSupplementInSelect");
     const totalWeight = useData("totalWeight");
     const carCount = useData("carCount");
     const calculatedLength = useData("calculatedLength");
     const speedLevel = useData("speedLevel");
+    const speedLevelInSelect = useData("speedLevelInSelect");
+    const speedLevelSelectTop = useData("speedLevelSelectTop");
     const loadWeight = useData("loadWeight");
     const passengerCar = useData("passengerCar");
     const heavyCar = useData("heavyCar");
@@ -35,6 +43,30 @@ export function TrainSettingsView(props:{
     const nonOperationalCar = useData("nonOperationalCar");
     const substitutePassengerCar = useData("substitutePassengerCar");
     const guardCar = useData("guardCar");
+
+
+    const sound = useGuiContext()['getContextModule']('sound');
+
+    useEffect(() => {
+        switch (activeElement) {
+            case "driverNumber":
+            case "assistantDriverNumber":
+                sound?.dispatchSound("kuayue:lkj2000/settings/driver_number");
+                break;
+            case "sectionNumber":
+                sound?.dispatchSound("kuayue:lkj2000/settings/sequence_id");
+                break;
+            case "stationNumber":
+                sound?.dispatchSound("kuayue:lkj2000/settings/station_number");
+                break;
+            case "trainNumber":
+                sound?.dispatchSound("kuayue:lkj2000/settings/train_number");
+                break;
+            case "totalWeight":
+                sound?.dispatchSound("kuayue:lkj2000/settings/pull_weight");
+                break;
+        }
+    }, [activeElement]);
     
     return <>
         <OuterFrame childrenStyle={{
@@ -49,7 +81,9 @@ export function TrainSettingsView(props:{
                 top:"5",
                 left:"5"
             }} content="参数设定" color="#000000" fontSize="5"></Text>
-            <View>
+            <View style={{
+                zIndex: "2"
+            }}>
                 <LabeledInput style={{
                     top: "20",
                     left: "5"
@@ -74,7 +108,16 @@ export function TrainSettingsView(props:{
                     top: "60",
                     left: "5",
                     zIndex: "3"
-                }} text="车次种类" content={"K"} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "trainType"} buttonWidth={6}></LabeledSelectInput>
+                }} text="车次种类"
+                content={trainType}
+                availableSelection={["C", "D", "K", "G", "DJ", "Z", "T"]}
+                textWidth={23}
+                inputWidth={26}
+                inSelectionMode={trainTypeInSelect}
+                selectionTop={trainTypeSelectTop}
+                height={5}
+                fontSize={5}
+                activate={activeElement === "trainType"} buttonWidth={6}></LabeledSelectInput>
 
                 <LabeledInput style={{
                     top: "70",
@@ -85,13 +128,33 @@ export function TrainSettingsView(props:{
                     top: "80",
                     left: "5",
                     zIndex: "2"
-                }} text="列车种类" content={"客车"} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "trainCategory"} buttonWidth={6}></LabeledSelectInput>
+                }} text="列车种类"
+                availableSelection={["客车", "货车"]}
+                content={trainCategory}
+                inSelectionMode={trainCategoryInSelect}
+                textWidth={23}
+                inputWidth={26}
+                height={5}
+                fontSize={5}
+                activate={activeElement === "trainCategory"}
+                buttonWidth={6}
+                ></LabeledSelectInput>
 
                 <LabeledSelectInput style={{
                     top: "90",
                     left: "5",
                     zIndex: "1"
-                }} text="本/补"  content={"本务"} textWidth={23} inputWidth={26} height={5} fontSize={5} activate={activeElement === "mainOrSupplement"} buttonWidth={6}></LabeledSelectInput>
+                }}
+                text="本/补"
+                content={mainOrSupplement}
+                availableSelection={["本务", "补机"]}
+                textWidth={23}
+                inputWidth={26}
+                height={5} fontSize={5}
+                activate={activeElement === "mainOrSupplement"}
+                inSelectionMode={mainOrSupplementInSelect}
+                buttonWidth={6}
+                ></LabeledSelectInput>
 
                 <LabeledInput style={{
                     top: "20",
@@ -111,7 +174,12 @@ export function TrainSettingsView(props:{
                 <LabeledSelectInput style={{
                     top: "50",
                     left: "58"
-                }} text="车速等级" content={"客5(80km/h)"} textWidth={23} inputWidth={45} height={5} fontSize={5} activate={activeElement === "speedLevel"} buttonWidth={6}></LabeledSelectInput>
+                }} text="车速等级"
+                content={speedLevel}
+                availableSelection={trainCategory == "0" ? ["客1:160km/h", "客2:140km/h", "客3:120km/h", "客4:100km/h", "客5:80km/h"] : ["货车80km/h"]}
+                inSelectionMode={speedLevelInSelect}
+                selectionTop={speedLevelSelectTop}
+                textWidth={23} inputWidth={45} height={5} fontSize={5} activate={activeElement === "speedLevel"} buttonWidth={6}></LabeledSelectInput>
 
                 <LabeledInput style={{
                     top: "20",

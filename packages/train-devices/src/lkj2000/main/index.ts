@@ -1,5 +1,5 @@
 import {defineGroup, defineState} from "react-native-minecraft-menu";
-import {useSettings} from "./settings";
+import {checkSettingsSchema, TrainSettings, useSettings} from "./settings";
 import {useSpecialDrive} from "./special_drive";
 import {useMainQuery} from "./main_query";
 
@@ -7,15 +7,46 @@ export function useMain(){
     return defineGroup('main', ()=>{
         const [speed, updateSpeed] = defineState<"----" | number>(0, 'speed');
         const [signal, updateSignal] = defineState<string>("N", 'signal');
-        const settings = useSettings();
+
+        const [invalidInput, setInvalidInput] = defineState(false, "invalidInput");
+
+        const [mainConfig, updateMainConfig] = defineState<TrainSettings>({
+            driverNumber: "",
+            assistantDriverNumber: "",
+            sectionNumber: "",
+            stationNumber: "",
+            trainType: "",
+            trainNumber: "",
+            trainCategory: "",
+            mainOrSupplement: "",
+            totalWeight: "",
+            carCount: "",
+            calculatedLength: "",
+            speedLevel: "",
+            loadWeight: "",
+            passengerCar: "",
+            heavyCar: "",
+            emptyCar: "",
+            nonOperationalCar: "",
+            substitutePassengerCar: "",
+            guardCar: ""
+        }, "currentConfig");
+
+        const settings = useSettings((config)=>{
+            if(checkSettingsSchema(config)){
+                setInvalidInput(true);
+                return;
+            }
+            setInvalidInput(false);
+            updateMainConfig(config);
+        });
+
         const specialDrive = useSpecialDrive();
         const mainQuery = useMainQuery();
 
         function onButtonClicked(button){
             console.info(`Button ${button} clicked!`)
-            if(button == 'settings'){
-                settings.setActive(!settings.isActive());
-            }else if(settings.isActive()){
+            if(settings.isActive()){
                 settings.onButtonClicked(button);
             }else if(specialDrive.isActive()){
                 specialDrive.onButtonClicked(button);
@@ -25,6 +56,9 @@ export function useMain(){
                 specialDrive.setActive(!specialDrive.isActive());
             }else if(button == 'query'){
                 mainQuery.setActive(!mainQuery.isActive());
+            } else if(button == 'settings'){
+                settings.setActive(!settings.isActive());
+                settings.setSettings(mainConfig());
             }
         }
         return {settings, onButtonClicked, updateSpeed, updateSignal};

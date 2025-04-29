@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {View, Text, MenuChannelComponent, useData} from "react-native-minecraft";
+import {View, Text, MenuChannelComponent, useData, useGuiContext} from "react-native-minecraft";
 import {OuterFrame} from "../components/Frame";
 import {SignalLight} from "../components/SignalLight";
 import TrainSettings, {TrainSettingsView} from "./TrainSettings";
@@ -30,7 +30,8 @@ export function MainEntryView(props:{
     light: string,
     style: any
 }){
-    const length = useData("settings.calculatedLength");
+    const currentConfig = useData("currentConfig");
+    const length = useData("currentConfig.calculatedLength");
     const speed = useData("speed");
     const [displayedLength, setDisplayedLength] = useState(0);
     useEffect(()=>{
@@ -40,6 +41,7 @@ export function MainEntryView(props:{
         else
             setDisplayedLength(0);
     },[length]);
+
     return <>
             <View style={{
                 positionType: 'absolute',
@@ -131,7 +133,14 @@ export function MainEntryView(props:{
                     width:'215',
                     top:'35',
                     left:'20'
-                }}></DataArea>
+                }}>
+                    <LKJ2000Curve style={{
+                        top:'2',
+                        left:'2',
+                        height:'116',
+                        width:'211'
+                    }}></LKJ2000Curve>
+                </DataArea>
                 <DataArea childrenStyle={{
                     height:'40',
                     width:'215',
@@ -345,17 +354,17 @@ export function MainEntryView(props:{
                         width:"1",
                         height:"159",
                         top:"1",
-                        left:"40"
+                        left:"58"
                     }}></View>
 
                     <View style={{
                         positionType:"absolute",
                         backgroundImage,
                         backgroundUV:"64 3 8 1",
-                        width:displayedLength.toString(),
+                        width:(Math.floor(displayedLength * 1.65)).toString(),
                         height:"2",
                         top:"115",
-                        left:(37 - displayedLength).toString(),
+                        left:(55 - Math.floor(displayedLength * 1.65)).toString(),
                     }}></View>
                     <View style={{
                         positionType:"absolute",
@@ -364,7 +373,7 @@ export function MainEntryView(props:{
                         width:"2",
                         height:"2",
                         top:"115",
-                        left:"37"
+                        left:"55"
                     }}></View>
                 </View>
 
@@ -410,6 +419,10 @@ export function MainEntryView(props:{
             </View>
 
     </>
+}
+
+export function LKJ2000Curve(props:  any) {
+        return React.createElement("kuayue:lkj_2000_curve", props);
 }
 
 

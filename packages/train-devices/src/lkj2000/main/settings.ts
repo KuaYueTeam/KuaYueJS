@@ -1,8 +1,68 @@
 import {defineGroup, defineState} from "react-native-minecraft-menu";
-import {createMenu} from "../utils/menu";
+import {createMenu, ElementConfig} from "../utils/menu";
 
-export function useSettings(){
+
+export function checkSettingsSchema(config: TrainSettings) {
+    if(config.driverNumber.length < 3) {
+        return false;
+    }
+
+    if(config.assistantDriverNumber.length != 0 && config.assistantDriverNumber.length < 3){
+        return false;
+    }
+
+    if(
+        config.sectionNumber.length == 0 ||
+        config.stationNumber.length == 0 ||
+        config.trainNumber.length == 0 ||
+        config.totalWeight.length == 0 ||
+        config.carCount.length == 0
+    ) {
+        return false;
+    }
+
+    if(config.trainType.length == 0 || ["0", "1", "2", "3", "4", "5", "6", "7", "8"].includes(config.trainType)) {
+        return false;
+    }
+
+    if(config.calculatedLength.length == 0){
+        return false;
+    }
+
+    const calculatedLength = parseInt(config.calculatedLength);
+    if(calculatedLength < 0 || calculatedLength >= 1000 * 10){
+        return false;
+    }
+
+    return true;
+}
+
+
+export interface TrainSettings {
+    driverNumber: string;
+    assistantDriverNumber: string;
+    sectionNumber: string;
+    stationNumber: string;
+    trainType: string;
+    trainNumber: string;
+    trainCategory: string;
+    mainOrSupplement: string;
+    totalWeight: string;
+    carCount: string;
+    calculatedLength: string;
+    speedLevel: string;
+    loadWeight: string;
+    passengerCar: string;
+    heavyCar: string;
+    emptyCar: string;
+    nonOperationalCar: string;
+    substitutePassengerCar: string;
+    guardCar: string;
+}
+
+export function useSettings(updateConfig: (config: TrainSettings)=>void){
     return defineGroup('settings', ()=>{
+
         const [isActive, setActive] = defineState(false, "active");
         const [activeElement, setActiveElement] = defineState("confirm", "activeElement");
 
@@ -10,14 +70,28 @@ export function useSettings(){
         const [assistantDriverNumber, setAssistantDriverNumber] = defineState("", "assistantDriverNumber");
         const [sectionNumber, setSectionNumber] = defineState("", "sectionNumber");
         const [stationNumber, setStationNumber] = defineState("", "stationNumber");
+
         const [trainType, setTrainType] = defineState("", "trainType");
+        const [trainTypeInSelect, setTrainTypeInSelect] = defineState(false, "trainTypeInSelect");
+        const [trainTypeSelectTop, setTrainTypeSelectTop] = defineState(0, "trainTypeSelectTop");
+
         const [trainNumber, setTrainNumber] = defineState("", "trainNumber");
+
         const [trainCategory, setTrainCategory] = defineState("", "trainCategory");
+        const [trainCategoryInSelect, setTrainCategoryInSelect] = defineState(false, "trainCategoryInSelect");
+
         const [mainOrSupplement, setMainOrSupplement] = defineState("", "mainOrSupplement");
+        const [mainOrSupplementInSelect, setMainOrSupplementInSelect] = defineState(false, "mainOrSupplementInSelect");
+
         const [totalWeight, setTotalWeight] = defineState("", "totalWeight");
         const [carCount, setCarCount] = defineState("", "carCount");
         const [calculatedLength, setCalculatedLength] = defineState("", "calculatedLength");
+
         const [speedLevel, setSpeedLevel] = defineState("", "speedLevel");
+        const [speedLevelSelectTop, setSpeedLevelSelectTop] = defineState(0, "speedLevelSelectTop");
+        const [speedLevelInSelect, setSpeedLevelInSelect] = defineState(false, "speedLevelInSelect");
+
+
         const [loadWeight, setLoadWeight] = defineState("", "loadWeight");
         const [passengerCar, setPassengerCar] = defineState("", "passengerCar");
         const [heavyCar, setHeavyCar] = defineState("", "heavyCar");
@@ -58,9 +132,17 @@ export function useSettings(){
             "trainType": {
                 "next": "trainNumber",
                 "previous": "stationNumber",
-                "type": "input",
-                "insert": (data)=>setTrainType(trainType() + data),
-                "delete": ()=>setTrainType(trainType().slice(0, -1))
+                "type": "select",
+
+                "get": ()=>trainType(),
+                "set": (data)=>setTrainType(data),
+                "delete": ()=>setTrainCategory(""),
+
+                "isSelectActive": ()=> trainTypeInSelect(),
+                "setSelectActive": (active)=> setTrainTypeInSelect(active),
+                "getTop": ()=>trainTypeSelectTop(),
+                "setTop": (index)=>setTrainTypeSelectTop(index),
+                "selectionSize": 8
             },
             "trainNumber": {
                 "next": "trainCategory",
@@ -72,16 +154,29 @@ export function useSettings(){
             "trainCategory": {
                 "next": "mainOrSupplement",
                 "previous": "trainNumber",
-                "type": "input",
-                "insert": (data)=>setTrainCategory(trainCategory() + data),
-                "delete": ()=>setTrainCategory(trainCategory().slice(0, -1))
+                "type": "select",
+
+                "get": ()=>trainCategory(),
+                "set": (data)=>setTrainCategory(data),
+                "delete": ()=>setTrainCategory(""),
+
+
+                "isSelectActive": ()=> trainCategoryInSelect(),
+                "setSelectActive": (active)=> setTrainCategoryInSelect(active),
+                "selectionSize": 2
             },
             "mainOrSupplement": {
                 "next": "totalWeight",
                 "previous": "trainCategory",
-                "type": "input",
-                "insert": (data)=>setMainOrSupplement(mainOrSupplement() + data),
-                "delete": ()=>setMainOrSupplement(mainOrSupplement().slice(0, -1))
+                "type": "select",
+
+                "get": ()=>mainOrSupplement(),
+                "set": (data)=>setMainOrSupplement(data),
+                "delete": ()=>setMainOrSupplement(""),
+
+                "isSelectActive": ()=> mainOrSupplementInSelect(),
+                "setSelectActive": (active)=> setMainOrSupplementInSelect(active),
+                "selectionSize": 2
             },
             "totalWeight": {
                 "next": "carCount",
@@ -107,9 +202,20 @@ export function useSettings(){
             "speedLevel": {
                 "next": "loadWeight",
                 "previous": "calculatedLength",
-                "type": "input",
-                "insert": (data)=>setSpeedLevel(speedLevel() + data),
-                "delete": ()=>setSpeedLevel(speedLevel().slice(0, -1))
+                "type": "select",
+
+                "get": ()=>speedLevel(),
+                "set": (data)=>setSpeedLevel(data),
+
+                "isSelectActive": ()=> speedLevelInSelect(),
+                "setSelectActive": (active)=>setSpeedLevelInSelect(active),
+
+                "getTop": ()=>speedLevelSelectTop(),
+                "setTop": (index)=>setSpeedLevelSelectTop(index),
+
+                "selectionSize": 8
+
+
             },
             "loadWeight": {
                 "next": "passengerCar",
@@ -205,6 +311,7 @@ export function useSettings(){
                 "down": "dualGauge",
                 "type": "button",
                 "click": ()=>{
+                    updateConfig(getSettings());
                     setActive(false);
                 }
             },
@@ -233,6 +340,53 @@ export function useSettings(){
             activeElement
         });
 
+        function setSettings(settings: TrainSettings) {
+            setActiveElement("confirm")
+            setDriverNumber(settings.driverNumber);
+            setAssistantDriverNumber(settings.assistantDriverNumber);
+            setSectionNumber(settings.sectionNumber);
+            setStationNumber(settings.stationNumber);
+            setTrainType(settings.trainType);
+            setTrainNumber(settings.trainNumber);
+            setTrainCategory(settings.trainCategory);
+            setMainOrSupplement(settings.mainOrSupplement);
+            setTotalWeight(settings.totalWeight);
+            setCarCount(settings.carCount);
+            setCalculatedLength(settings.calculatedLength);
+            setSpeedLevel(settings.speedLevel);
+            setLoadWeight(settings.loadWeight);
+            setPassengerCar(settings.passengerCar);
+            setHeavyCar(settings.heavyCar);
+            setEmptyCar(settings.emptyCar);
+            setNonOperationalCar(settings.nonOperationalCar);
+            setSubstitutePassengerCar(settings.substitutePassengerCar);
+            setGuardCar(settings.guardCar);
+        }
+
+        function getSettings() {
+            return {
+                driverNumber: driverNumber(),
+                assistantDriverNumber: assistantDriverNumber(),
+                sectionNumber: sectionNumber(),
+                stationNumber: stationNumber(),
+                trainType: trainType(),
+                trainNumber: trainNumber(),
+                trainCategory: trainCategory(),
+                mainOrSupplement: mainOrSupplement(),
+                totalWeight: totalWeight(),
+                carCount: carCount(),
+                calculatedLength: calculatedLength(),
+                speedLevel: speedLevel(),
+                loadWeight: loadWeight(),
+                passengerCar: passengerCar(),
+                heavyCar: heavyCar(),
+                emptyCar: emptyCar(),
+                nonOperationalCar: nonOperationalCar(),
+                substitutePassengerCar: substitutePassengerCar(),
+                guardCar: guardCar()
+            }
+        }
+
         return {
             setActive,
             isActive,
@@ -256,7 +410,9 @@ export function useSettings(){
             emptyCar,
             nonOperationalCar,
             substitutePassengerCar,
-            guardCar
+            guardCar,
+            setSettings,
+            getSettings
         };
     });
 }

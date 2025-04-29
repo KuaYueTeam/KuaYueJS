@@ -1,6 +1,6 @@
 import { MenuStateManager } from "react-native-minecraft-menu";
 
-type ElementConfig = {
+export type ElementConfig = {
     type: "button" | "input" | "select";
     up?: string;
     down?: string;
@@ -11,7 +11,18 @@ type ElementConfig = {
     click?: () => void;
     insert?: (data: string) => void;
     delete?: () => void;
+    leave?: ()=>void;
+
     isSelectActive?: () => boolean;
+    setSelectActive?: (active?: boolean)=>void;
+
+    getTop?: () => number;
+    setTop?: (index: number) => void;
+
+    get?: () => string;
+    set?: (data: string) => void;
+
+    selectionSize?: number | ( () => number);
 }
 
 type MenuConfig = {
@@ -56,7 +67,18 @@ export function createMenu(config: MenuConfig) {
             // 方向键处理
             case "up":
                 if(element.type === "select" && element.isSelectActive?.()) {
-                    // @TODO
+                    let current = element.get?.();
+                    if(!current) current = "0";
+                    let currentIndex = parseInt(current);
+                    currentIndex -= 1;
+                    if(currentIndex < 0) {
+                        break;
+                    }
+                    element.set?.(currentIndex.toString());
+                    const currentTop = element.getTop?.() ?? 0;
+                    if(currentIndex < currentTop) {
+                        element.setTop?.(currentIndex);
+                    }
                 } else if(element.up) {
                     config.setActiveElement(element.up);
                 } else if(element.previous) {
@@ -67,9 +89,30 @@ export function createMenu(config: MenuConfig) {
             case "down":
                 if(element.type === "select") {
                     if(element.isSelectActive?.()) {
-                        // @TODO
+                        let current = element.get?.();
+                        if(!current) current = "0";
+                        let currentIndex = parseInt(current);
+                        currentIndex += 1;
+                        let maxIndex;
+                        if(typeof element.selectionSize == 'function') {
+                            maxIndex = element.selectionSize();
+                        } else if(typeof element.selectionSize == 'number') {
+                            maxIndex = element.selectionSize;
+                        }
+                        if(currentIndex >= maxIndex) {
+                            break;
+                        }
+                        element.set?.(currentIndex.toString());
+                        const currentTop = element.getTop?.() ?? 0;
+                        if(currentIndex >= currentTop + 4) {
+                            element.setTop?.(Math.max(currentIndex - 4 + 1,0));
+                        }
                     } else {
-                        // @TODO
+                        element.setSelectActive?.(true);
+                        if(!element.get?.()){
+                            element.set?.("0");
+                        }
+                        return;
                     }
                 } else if(element.down) {
                     config.setActiveElement(element.down);
@@ -98,6 +141,9 @@ export function createMenu(config: MenuConfig) {
                 if(element.type === "button") {
                     element.click?.();
                 } else {
+                    if(element.type == "select") {
+                        element.setSelectActive?.(false);
+                    }
                     if(element.next) {
                         config.setActiveElement(element.next);
                     }

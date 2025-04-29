@@ -1,4 +1,4 @@
-import {View, Text, useEmits} from "react-native-minecraft";
+import {View, Text, useEmits, useGuiContext} from "react-native-minecraft";
 import React from "react";
 import {OuterFrame} from "../components/Frame";
 
@@ -7,12 +7,17 @@ const texture = require('../../assets/devices.png')
 export default function OperationPanel(props:{
     style:any,
 }){
-    const clickButton = useEmits("operation");
+    const clickButtonHook = useEmits("operation");
+    const sound = useGuiContext()['getContextModule']('sound');
+    const clickButton = (button:string)=>{
+        clickButtonHook(button);
+        sound?.dispatchSound("kuayue:lkj2000/beep");
+    }
     return <>
         <View style={{
             positionType:"absolute",
-            top:"220",
-            left:"0",
+            top:"217",
+            left:"5",
             height: '32',
             width: '256',
             ...props.style ?? {}
