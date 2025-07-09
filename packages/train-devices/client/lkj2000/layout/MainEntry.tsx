@@ -135,12 +135,6 @@ export function MainEntryView(props:{
                     top:'35',
                     left:'20'
                 }}>
-                    <LKJ2000Curve style={{
-                        top:'2',
-                        left:'2',
-                        height:'116',
-                        width:'211'
-                    }}></LKJ2000Curve>
                 </DataArea>
                 <DataArea childrenStyle={{
                     height:'40',
@@ -218,6 +212,69 @@ export function MainEntryView(props:{
                     }} content="客5 (80km/h)" color='#FFFF00' fontSize="5"></Text>
                 </InfoArea> : null }
 
+
+                <View style={{
+                    left:"16",
+                    top:"34",
+                    zIndex: "1"
+                }}>
+                    {
+                        ["","100","","80","","60","","40","","20","","0"].map((t,i,n)=>{
+                            if(t == "")
+                                return <View style={{
+                                    positionType:"absolute",
+                                    backgroundImage,
+                                    backgroundUV:"64 0 8 1",
+                                    width:"2",
+                                    height:"1",
+                                    top:((i * 118) / (n.length - 1)).toString(),
+                                    left:"2"
+                                }}></View>;
+
+                            return <>
+                                <Text style={{
+                                    positionType:"absolute",
+                                    top:((i * 118) / (n.length - 1)).toString(),
+                                }} fontSize="5" content={t} textAlign="rightMid" color="#000000"></Text>
+                                <View style={{
+                                    positionType:"absolute",
+                                    backgroundImage,
+                                    backgroundUV:"64 0 8 1",
+                                    width:"4",
+                                    height:"1",
+                                    top:((i * 118) / (n.length - 1)).toString(),
+                                    left:"0"
+                                }}></View>
+                                <View style={{
+                                    positionType:"absolute",
+                                    backgroundImage,
+                                    backgroundUV:"64 1 8 1",
+                                    width:"213",
+                                    height:"1",
+                                    top:((i * 118) / (n.length - 1)).toString(),
+                                    left:"5",
+                                    backgroundFilterColor:"FFFFFFFF"
+                                }}></View>
+                            </>
+
+                        })
+                    }
+                </View>
+
+                <View style={{
+                    left:"0",
+                    top:"0",
+                    zIndex:'1'
+                }}>
+                    <LKJ2000Curve style={{
+                        top:'37',
+                        left:'22',
+                        height:'116',
+                        width:'211',
+                        zIndex: '2'
+                    }}></LKJ2000Curve>
+                </View>
+
                 <View style={{
                     left:"172",
                     top:"36",
@@ -267,49 +324,9 @@ export function MainEntryView(props:{
 
                 <View style={{
                     left:"16",
-                    top:"35"
+                    top:"34",
+                    zIndex: "2"
                 }}>
-                    {
-                        ["","100","","80","","60","","40","","20","","0"].map((t,i,n)=>{
-                            if(t == "")
-                                return <View style={{
-                                    positionType:"absolute",
-                                    backgroundImage,
-                                    backgroundUV:"64 0 8 1",
-                                    width:"2",
-                                    height:"1",
-                                    top:((i * 118) / (n.length - 1)).toString(),
-                                    left:"2"
-                                }}></View>;
-
-                            return <>
-                                <Text style={{
-                                    positionType:"absolute",
-                                    top:((i * 118) / (n.length - 1)).toString(),
-                                }} fontSize="5" content={t} textAlign="rightMid" color="#000000"></Text>
-                                <View style={{
-                                    positionType:"absolute",
-                                    backgroundImage,
-                                    backgroundUV:"64 0 8 1",
-                                    width:"4",
-                                    height:"1",
-                                    top:((i * 118) / (n.length - 1)).toString(),
-                                    left:"0"
-                                }}></View>
-                                <View style={{
-                                    positionType:"absolute",
-                                    backgroundImage,
-                                    backgroundUV:"64 1 8 1",
-                                    width:"213",
-                                    height:"1",
-                                    top:((i * 118) / (n.length - 1)).toString(),
-                                    left:"5"
-                                }}></View>
-                            </>
-
-                        })
-                    }
-
                     <Text style={{
                         positionType:"absolute",
                         top:"128",
