@@ -20,8 +20,8 @@ export function LKJ2000Menu(handle:MenuHandle){
                     root.main.updateSpeed("----");
                     root.main.updateSignal("N");
                 } else {
-                    root.main.updateSpeed(Math.floor(Math.abs(train.getSpeed() * 40)));
-                    root.main.updateSignal("UU");
+                    root.main.updateSpeed(Math.floor(Math.abs(train.getSpeed() * 96)));
+                    root.main.updateSignal("N");
                 }
             },100);
             return ()=>{

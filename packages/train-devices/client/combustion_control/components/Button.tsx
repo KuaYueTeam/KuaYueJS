@@ -8,7 +8,7 @@ export function CommonButton(props:{
     return <View style={{
         positionType: "absolute",
         backgroundImage: background,
-        backgroundUV: "32 0 10 10",
+        backgroundUV: "35 80 12 13",
         ...props.style
     }}>
         <View style={{
@@ -17,7 +17,7 @@ export function CommonButton(props:{
             top: "0",
             left: "0",
             backgroundImage: background,
-            backgroundUV: "42 0 10 10",
+            backgroundUV: "35 93 12 13",
             backgroundFilterColor: props.color
         }}></View>
     </View>

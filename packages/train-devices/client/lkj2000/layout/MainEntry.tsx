@@ -34,6 +34,7 @@ export function MainEntryView(props:{
     const length = useData("currentConfig.calculatedLength");
     const speed = useData("speed");
     const [displayedLength, setDisplayedLength] = useState(0);
+    const signal = useData("signal")
     useEffect(()=>{
         let _length = parseInt(length);
         if(!isNaN(_length) && _length > 0)
@@ -62,7 +63,7 @@ export function MainEntryView(props:{
                     <SignalLight style={{
                         top:"2",
                         left:"2"
-                    }} type={props.light}></SignalLight>
+                    }} type={signal ?? 'N'}></SignalLight>
                 </DataArea>
                 <OuterFrame childrenStyle={{
                     height:'5',

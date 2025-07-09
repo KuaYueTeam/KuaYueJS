@@ -7,7 +7,7 @@ export function TrainGauge(props:{
     return <View style={{
         positionType: "absolute",
         backgroundImage: background,
-        backgroundUV: "0 0 31 31",
+        backgroundUV: "0 80 35 35",
         ...props.style
     }}>
     </View>
